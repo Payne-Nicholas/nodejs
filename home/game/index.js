@@ -14,7 +14,9 @@ let count = 0;
 process.stdin.on('data', e => {
     const playerAction = e.toString().trim();
     // console.log(playerAction);
-    const result = game(playerAction);
+    const result = game.test(playerAction);
+    //调用module.exports中自定义属性test2
+    const result2 = game.test2(playerAction);
 
     if (result == -1) { //胜负平 分别对应 -1,1,0
         count++;
