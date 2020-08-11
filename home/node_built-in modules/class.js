@@ -28,7 +28,7 @@ console.log(p)
 // }
 
 /** 
- ** 上面的代码定义了一个“类”，可以看到里面有一个custructor方法，这就是构造函数
+ ** 上面的代码定义了一个“类”，可以看到里面有一个constructor方法，这就是构造函数
  ** 而this关键字则代表实例对象。也就是说，ES5的构造函数Point，对应ES6的Point类的构造方法
  **/
 
@@ -40,6 +40,8 @@ console.log(p)
  **/
 
 class Foo {
-
+    //  ...
 }
-console.log(typeof(Foo))
+console.log(typeof Foo);
+const result = (Foo === Foo.prototype.constructor);
+console.log(result);
