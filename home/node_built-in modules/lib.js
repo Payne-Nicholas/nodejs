@@ -14,5 +14,7 @@ class GeekTime extends EventEmitter {
 
 const geekTime = new GeekTime;
 
-
-module.exports = geekTime;
+//geetTime的实例保存在module.exports对象中
+module.exports = {
+    'geekTime':geekTime
+};
