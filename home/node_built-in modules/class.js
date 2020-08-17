@@ -115,3 +115,7 @@ Object.assign(Point.prototype, {
         //...
     }
 })
+
+// prototype对象的constructor属性，直接指向“类”的本身，这与 ES5 的行为是一致的。
+
+Point.prototype.constructor === Point // true
