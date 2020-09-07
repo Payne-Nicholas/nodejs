@@ -2,10 +2,15 @@ const net = require('net');
 
 const server = net.createServer((socket) => {
     socket.on('data', (buffer) => {
-        const lessonId = buffer.readInt32BE();
+        const seqBuffer = buffer.slice(0, 2);
+        const lessonId = buffer.readInt32BE(2);
         setTimeout(() => {
-            socket.write(Buffer.from(`'${data[lessonId]}'`));
-        }, 500);
+            const buffer = Buffer.concat([
+                seqBuffer,
+                Buffer.from(`'${data[lessonId]}'`)
+            ]);
+            socket.write(buffer);
+        }, 10 + Math.random() * 1000);
     });
 });
 

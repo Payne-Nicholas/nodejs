@@ -1,3 +1,4 @@
+/* client相当于实际项目中的node做的bff层，server相当于java、php等后端，这里只是把server在node中实现 */
 const net = require('net');
 
 const socket = new net.Socket({});
@@ -31,14 +32,26 @@ const lessonIds = [
     '146582'
 ];
 
-const buffer = Buffer.alloc(4);
+let id = Math.floor(Math.random() * lessonIds.length);
 
-const index = Math.floor(Math.random() * lessonIds.length);
-
-buffer.writeInt32BE(lessonIds[index]);
-
-socket.write(buffer);
-
-socket.on('data', () => {
-    console.log(lessonIds[index], buffer.toString());
+socket.on('data', (buffer) => {
+    const seqBuffer = buffer.slice(0, 2);
+    const titleBuffer = buffer.slice(2);
+    id = Math.floor(Math.random() * lessonIds.length);
+    console.log(seqBuffer.readInt16BE(), titleBuffer.toString());
+    socket.write(encode(id));
 });
+let seq = 0;
+const encode = (index) => {
+    buffer = Buffer.alloc(6);
+    buffer.writeInt16BE(seq);
+    buffer.writeInt32BE(lessonIds[index], 2);
+    console.log(seq, lessonIds[index]);
+    seq++;
+    return buffer;
+};
+
+for (let k = 0; k < 100; k++) {
+    id = Math.floor(Math.random() * lessonIds.length);
+    socket.write(encode(id));
+}
